@@ -29,12 +29,6 @@ void PID::UpdateError(double cte) {
   long delta_ts_ms = current_time - last_time;
   last_time = current_time;
 
-  // std::cout << "delta_t" << delta_ts_ms << std::endl;
-
-  // d_error = (cte - p_error) / delta_ts_ms;
-  // i_error += p_error + d_error / 2 * delta_ts_ms ;
-  // p_error = cte;
-
   d_error = (cte - p_error) / delta_ts_ms*1000;
   i_error += p_error;
   p_error = cte;
