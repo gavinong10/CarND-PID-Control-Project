@@ -3,6 +3,22 @@ Self-Driving Car Engineer Nanodegree Program
 
 ---
 
+## Reflection
+
+### Describe the effect each of the P, I, D components had in your implementation.
+As per the theory, the components had the respective impact on driving:
+- P: 'Proportion' component was what initiated a correction in direct proportion to the cross track error. This was especially important for making corners, where the curvature of the road would quickly introduce cross track error and required an immediate response from the vehicle to follow the track.
+- I: 'Integration' component was the correction introduced to counteract steering bias. If there was a steering bias, then the proportional component would only visibly respond and make a correction once it has veered off with a high enough CTE. The need for the I component can manifest in multiple ways - either the car fails to fully restore back to the intended path given a steady state (it remains off track by a constant factor), or it oscillates favoring one side. There wasn't much observed steering bias in this case, but this is still an important parameter for the vehicle to restore to the center of the road during turns as the P component is insufficient on its own. It would result in the vehicle hugging the outer parts of the road.
+- D: 'Derivative' component was the counter-correction responding to the tendency for corrections to overshoot. Its presence caused an oscilating vehicle to stabilize - however, when tuned too high, it could cause the controller to make corrections in a very jerky fashion.
+
+After optimization, the PID parameters were set to p = 0.12, i = 0.00038 and d = 0.0375.
+
+A video explaining the performance and showing the vehicle in action can be found [here at this Youtube link](https://www.youtube.com/upload)
+
+### Describe how the final hyperparameters were chosen.
+Initially, a sort of Twiddle variation was coded. It was assumed that we could find a set of parameters that would stay on the road for a long duration, and then modify it slightly every few seconds based on the error accumulated and slowly converge on a solution. This was perhaps overly ambitious, as the code tried to compensate for the inconsistency in different starting points, road sections etc. through various techniques including averaging and sampling. In the end, it proved difficult to find a set of parameters to begin with that would stay on the road long enough to be able to fine tune.
+
+Subsequently, it was apparent that understanding the parameters individually was key. Fast feedback was important, so the code was modified so that parameters could be changed for the PID filter instantaneously as the car was in motion (and without rebuilding the code). Starting with small P, I, D values, D was raised to a level that stabilized the car on the straight, followed by raising P so that corners could be made adequately. D was then further tweaked in conjunction with adjusting P to finally converge on the solution. I was left at a small value, only to be slightly tweaked at the end to allow the vehicle to better restore itself to the center of the road around corners.
 ## Dependencies
 
 * cmake >= 3.5
