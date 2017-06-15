@@ -17,6 +17,7 @@ public:
   double Ki;
   double Kd;
 
+  unsigned long last_time;
   /*
   * Constructor
   */
@@ -41,6 +42,12 @@ public:
   * Calculate the total PID error.
   */
   double TotalError();
+
+  double GetSteer();
+
+// private:
+//   double last_CTE;
+//   double total_CTE;
 };
 
 #endif /* PID_H */
