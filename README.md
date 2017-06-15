@@ -13,7 +13,7 @@ As per the theory, the components had the respective impact on driving:
 
 After optimization, the PID parameters were set to p = 0.12, i = 0.00038 and d = 0.0375.
 
-A video explaining the performance and showing the vehicle in action can be found [here at this Youtube link](https://www.youtube.com/upload)
+A video explaining the performance and showing the vehicle in action can be found [here at this Youtube link](https://youtu.be/Qj-NxDb-MaM)
 
 ### Describe how the final hyperparameters were chosen.
 Initially, a sort of Twiddle variation was coded. It was assumed that we could find a set of parameters that would stay on the road for a long duration, and then modify it slightly every few seconds based on the error accumulated and slowly converge on a solution. This was perhaps overly ambitious, as the code tried to compensate for the inconsistency in different starting points, road sections etc. through various techniques including averaging and sampling. In the end, it proved difficult to find a set of parameters to begin with that would stay on the road long enough to be able to fine tune.
